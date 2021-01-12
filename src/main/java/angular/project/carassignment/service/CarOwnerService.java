@@ -3,12 +3,12 @@ package angular.project.carassignment.service;
 import angular.project.carassignment.controller.CarOwnerController;
 import angular.project.carassignment.model.Car;
 import angular.project.carassignment.model.CarOwner;
-import angular.project.carassignment.model.CarStatus;
 import angular.project.carassignment.model.Owner;
 import angular.project.carassignment.repository.CarOwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,12 +39,11 @@ public class CarOwnerService {
                 Car car = carService.getCarById(carOwnerDTO.getCarId());
                 Owner owner = ownerService.getOwnerById(carOwnerDTO.getOwnerId());
 
-                carOwner.setDateAssignation(carOwnerDTO.getDateAssignation());
+                carOwner.setDateAssignation(new Date());
                 carOwner.setCar(car);
                 carOwner.setOwner(owner);
 
                 carOwnerRepository.save(carOwner);
-                //update car status to occupied
                 updateCarStatusId(car.getId());
             }catch (Exception ex){
                 System.out.println("Error to save Car Owner.");
